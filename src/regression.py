@@ -32,19 +32,22 @@ def random_split():
         df_list[i].to_csv(f"../output/{filenames[i]}{params.num_run}.csv", index=False)
 
         # Save the averages of the metrics into the dataframes.         
-        df_avg[f'{filenames[i]}_Avg{params.num_run}'] = df_list[i].mean(axis=0).to_frame()
+        df_avg[f"{filenames[i]}_Avg{params.num_run}"] = df_list[i].mean(axis=0).to_frame()
           
     # Create boxplots for mean squared error (MSE), mean absolute error (MAE), 
     # r-squared (R-2) and Pearson's correlation coefficient (PCC) 
     # for all iterations to check for variance, outliers, skewness.
-    print(f'Mean Squared Error (MSE), Mean Abs Error(MAE), R-Squared (R-2) and Pearson\'s Correlation Coef (PCC) of '
-          f'\n1. Simple Linear Regression for the first variable (SLR_var1),'
-          f'\n2. Simple Linear Regression for the second variable (SLR_var2), and '
-          f'\n3. Multiple Linear Regression (MLR)')
+    print(f"Mean Squared Error (MSE), Mean Abs Error(MAE), R-Squared (R-2) and Pearson's Correlation Coef (PCC) of "
+          f"\n1. Simple Linear Regression for the first variable (SLR_var1),"
+          f"\n2. Simple Linear Regression for the second variable (SLR_var2), and "
+          f"\n3. Multiple Linear Regression (MLR)")
     analysis.plot_boxplot(df_list, titles, params.num_run)  
+
+    # Plot and save the average model performance.
     print("\n\nAverage model performance:") 
-    print(df_avg)
-    analysis.plot_bar_charts(df_avg, titles)   
+    print(df_avg)    
+    analysis.plot_bar_charts(df_avg, titles)  
+    df_avg.to_csv(f"../output/ Allmetrics_Avg{params.num_run}.csv") 
 
 def iteration(iterno, data, df_mse, df_mae, df_r2, df_corr):    
     # In each iteration, values are predicted using 3 different inputs
